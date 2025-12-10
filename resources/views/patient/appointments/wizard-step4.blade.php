@@ -1,0 +1,397 @@
+@extends('layouts.patient')
+
+@section('title', 'Book an Appointment - Step 4')
+
+@section('page_title', 'Book an Appointment - Step 4')
+
+@section('content')
+    <style>
+        .text-customTeal {
+            color: rgb(87, 165, 150) !important;
+            font-weight: 700 !important;
+        }
+
+        .bg-customTeal {
+            background-color: rgb(87, 165, 150) !important;
+        }
+
+        .border-customTeal {
+            border-color: rgb(87, 165, 150) !important;
+        }
+
+        .bg-green-500 {
+            background-color: rgb(87, 165, 150) !important;
+        }
+    </style>
+    <div class="flex-1 p-4 lg:ml-0">
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-6">
+                <a class="d-inline-flex align-items-center text-secondary" href="{{ route('patient.appointment.dashboard') }}"
+                    style="font-size: 1rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-chevron-left mr-1">
+                        <path d="m15 18-6-6 6-6"></path>
+                    </svg>
+                    <span>Back to Appointments</span>
+                </a>
+            </div>
+            <div class="rounded-xl border bg-white shadow-sm" style="border-color: #e3e6f0;">
+                <div class="px-4 pt-4 pb-2">
+                    <div class="h4 font-weight-bold text-customTeal mb-1">Book an Appointment</div>
+                    <div class="text-muted mb-3" style="font-size: 0.98rem;">Complete the form below to schedule your
+                        appointment</div>
+                    <!-- Wizard Bar -->
+                    <div class="d-flex align-items-center justify-content-between mb-4" style="gap: 0.5rem;">
+                        <div class="wizard-step active">1</div>
+                        <div class="wizard-bar"></div>
+                        <div class="wizard-step active">2</div>
+                        <div class="wizard-bar"></div>
+                        <div class="wizard-step active">3</div>
+                        <div class="wizard-bar"></div>
+                        <div class="wizard-step active">4</div>
+                    </div>
+                    <style>
+                        .wizard-step {
+                            width: 38px;
+                            height: 38px;
+                            border-radius: 50%;
+                            background: rgb(87, 165, 150);
+                            color: #fff;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-weight: 700;
+                            font-size: 1.2rem;
+                            box-shadow: 0 2px 6px rgba(87, 165, 150, 0.08);
+                            border: 2px solid rgb(87, 165, 150);
+                            transition: background 0.2s, color 0.2s;
+                        }
+
+                        .wizard-bar {
+                            flex: 1;
+                            height: 4px;
+                            background: linear-gradient(90deg, rgb(87, 165, 150) 60%, #e3e6f0 100%);
+                            border-radius: 2px;
+                            margin: 0 2px;
+                        }
+                    </style>
+                        {{-- <div class="wizard-step active">1</div>
+                        <div class="wizard-bar"></div>
+                        <div class="wizard-step active">2</div>
+                        <div class="wizard-bar"></div>
+                        <div class="wizard-step active">3</div>
+                        <div class="wizard-bar"></div>
+                        <div class="wizard-step active">4</div> --}}
+                    </div>
+                </div>
+                <div class="p-4 pt-0">
+                    @if (session('success'))
+                        <div class="alert alert-success text-center">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger mb-4" role="alert" style="background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; padding: 15px; border-radius: 5px;">
+                            <strong>⚠️ Payment Error:</strong>
+                            <ul class="mb-0 mt-2" style="list-style:none;padding-left:0;">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <style>
+                        .wizard-step {
+                            width: 38px;
+                            height: 38px;
+                            border-radius: 50%;
+                            background: rgb(87, 165, 150);
+                            color: #fff;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-weight: 700;
+                            font-size: 1.2rem;
+                            box-shadow: 0 2px 6px rgba(87, 165, 150, 0.08);
+                            border: 2px solid rgb(87, 165, 150);
+                            transition: background 0.2s, color 0.2s;
+                        }
+
+                        .wizard-step.active {
+                            background: rgb(87, 165, 150);
+                            color: #fff;
+                            border-color: rgb(87, 165, 150);
+                        }
+
+                        .wizard-bar {
+                            flex: 1;
+                            height: 4px;
+                            background: linear-gradient(90deg, rgb(87, 165, 150) 60%, #e3e6f0 100%);
+                            border-radius: 2px;
+                            margin: 0 2px;
+                        }
+
+                        .rounded-xl {
+                            border-radius: 1.25rem !important;
+                        }
+
+                        .shadow-sm {
+                            box-shadow: 0 2px 8px rgba(87, 165, 150, 0.07) !important;
+                        }
+
+                        .text-customTeal {
+                            color: rgb(87, 165, 150) !important;
+                        }
+                    </style>
+                    <div class="space-y-5">
+                        <h2 class="text-lg font-semibold" style="background-color: #51A897;">Review & Payment</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg space-y-4">
+                            <h3 class="font-medium text-lg">Appointments Summary (1 appointment)</h3>
+                            <div class="bg-white p-4 rounded-lg border space-y-3">
+                                <div class="flex justify-between items-start">
+                                    <div class="space-y-1 mb-4">
+                                        <div class="flex items-center gap-2">
+                                            <h4 class="font-medium text-customTeal">Appointment 1</h4>
+                                            <span
+                                                class="px-2 py-1 text-xs rounded-full font-medium bg-yellow-100 text-yellow-800">Payment
+                                                Pending</span>
+                                        </div>
+                                        <p><strong>Patient:</strong> {{ Auth::guard('patient')->user()->first_name }}
+                                            {{ Auth::guard('patient')->user()->last_name }}
+                                            @if($selectedMember && $selectedMember['type'] === 'family')
+                                                <br>{{ $selectedMember['first_name'] }} {{ $selectedMember['last_name'] }}
+                                            @endif
+                                        </p>
+                                        <p><strong>Type:</strong>
+                                            @if($selectedMember && $selectedMember['type'] === 'family')
+                                                Family Member ({{ $selectedMember['relationship'] }})
+                                            @else
+                                                {{ $wizardData['step1']['is_adhd_appointment'] ? 'ADHD/Anxiety-Depression/ADHD Follow-up' : 'Sick Visit' }}
+                                            @endif
+                                        </p>
+                                        <p><strong>Doctor:</strong> Dr.
+                                            {{ $wizardData['step3']['doctor_name'] ?? 'Not selected' }}</p>
+                                        <p><strong>Date & Time:</strong>
+                                            {{ \Carbon\Carbon::parse($wizardData['step3']['appointment_date'])->format('m/d/y') ?? 'Not selected' }},
+                                            {{ $wizardData['step3']['appointment_time'] ? date('h:i A', strtotime($wizardData['step3']['appointment_time'])) : 'Not selected' }}
+                                        </p>
+                                        <p><strong>Reason:</strong>
+                                            {{ $wizardData['step3']['symptoms'] ?? 'Not provided' }}</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-lg font-semibold text-customTeal">$100</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="p-3 bg-gray-50 rounded-lg border">
+                                        <div class="grid gap-2 space-y-3">
+                                            <div class="flex items-center space-x-2 opacity-50 cursor-not-allowed">
+                                                <button type="button" disabled
+                                                    class="aspect-square h-5 w-5 rounded-full border border-gray-500"></button>
+                                                <label class="text-sm font-medium flex items-center gap-2"
+                                                    for="insurance-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="lucide lucide-shield h-4 w-4 text-gray-400">
+                                                        <path
+                                                            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+                                                        </path>
+                                                    </svg>
+                                                    <span class="text-sm font-medium">Pay by Insurance</span>
+                                                </label>
+                                            </div>
+                                            <div class="flex items-center space-x-2">
+                                                <button type="button"
+                                                    class="aspect-square h-5 w-5 rounded-full border border-gray-500 bg-customTeal"></button>
+                                                <label class="text-sm font-medium flex items-center gap-2"
+                                                    for="card-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="lucide lucide-credit-card h-4 w-4 text-customTeal">
+                                                        <rect width="20" height="14" x="2" y="5" rx="2">
+                                                        </rect>
+                                                        <line x1="2" x2="22" y1="10"
+                                                            y2="10"></line>
+                                                    </svg>
+                                                    <span class="text-sm font-medium">Pay by Card</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-between gap-2 p-2 bg-red-50 border border-red-200 rounded-lg">
+                                        <div class="flex items-center gap-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-circle-alert h-4 w-4 text-red-500">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <line x1="12" x2="12" y1="8" y2="12">
+                                                </line>
+                                                <line x1="12" x2="12.01" y1="16" y2="16">
+                                                </line>
+                                            </svg>
+                                            <span class="text-sm text-red-700">Can't switch to insurance as
+                                                {{ Auth::guard('patient')->user()->first_name }}
+                                                {{ Auth::guard('patient')->user()->last_name }} doesn't have
+                                                insurance</span>
+                                        </div>
+                                        <div>
+                                            {{-- <button
+                                                class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium h-8 rounded-md text-xs px-4 py-2 bg-customTeal text-white hover:bg-customTeal/90 hover:text-white"
+                                                type="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="lucide lucide-shield h-4 w-4 text-white">
+                                                    <path
+                                                        d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+                                                    </path>
+                                                </svg>
+                                                Add Insurance
+                                            </button> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-t pt-4">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-lg font-semibold">Total Amount (Card Payments):</span>
+                                        <span class="text-2xl font-bold text-customTeal">$100</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-t pt-4">
+                                <div class="space-y-4">
+                                    <div class="text-lg font-medium text-center">Payment Options for 1 pending
+                                        appointment</div>
+                                    <div class="bg-customTeal/5 p-4 rounded-lg border border-customTeal/20">
+                                        <div class="flex justify-between items-center mb-3">
+                                            <div>
+                                                <h4 class="font-medium text-gray-600">Card Payment</h4>
+                                                <p class="font-medium text-md"><span class="text-gray-700">1
+                                                        appointment to pay with card for </span><span
+                                                        class="text-customTeal/100">{{ Auth::guard('patient')->user()->first_name }}
+                                                        {{ Auth::guard('patient')->user()->last_name }}</span></p>
+                                            </div>
+                                            <span class="text-xl font-bold text-customTeal/100">$100</span>
+                                        </div>
+                                        <button type="button"
+                                            class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium h-12 rounded-md px-8 w-full bg-customTeal/100 hover:bg-customTeal/80 text-white border-none"
+                                            style="width: 100%; text-align: center; background-color: #51A897 !important; padding: 16px 32px; border: none !important; outline: none !important;"
+                                            data-toggle="modal" data-target="#cardPaymentModal"
+                                            onclick="document.getElementById('cardPaymentModal').style.display='block'">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-credit-card h-4 w-4 mr-2">
+                                                <rect width="20" height="14" x="2" y="5" rx="2">
+                                                </rect>
+                                                <line x1="2" x2="22" y1="10" y2="10">
+                                                </line>
+                                            </svg>
+                                            Pay $100 with Card
+                                        </button>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        {{-- <form>
+                                          <div id="card-element" class="form-control"></div>
+                                          <button class="btn btn-primary w-100 mt-2" type="submit" onclick="createToken()">Submit</button>
+                                      </form> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between pt-6">
+                        <button type="button" onclick="window.history.back()"
+                            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-chevron-left h-4 w-4 mr-2">
+                                <path d="m15 18-6-6 6-6"></path>
+                            </svg>
+                            Back to {{ Auth::guard('patient')->user()->first_name }}'s Form
+                        </button>
+                    </div>
+
+                    <!-- Card Payment Modal -->
+                    <div id="cardPaymentModal" class="modal" tabindex="-1" role="dialog"
+                        style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);">
+                        <div class="modal-dialog" role="document"
+                            style="max-width:400px;margin:5% auto;">
+                            <div class="modal-content rounded-lg shadow-lg"
+                                style="background:#fff;">
+                                <div class="modal-header d-flex justify-content-between align-items-center"
+                                    style="border-bottom:1px solid #e3e6f0;padding:1rem 1.5rem;">
+                                    <h5 class="modal-title text-customTeal">Card Payment</h5>
+                                    <button type="button" class="close btn btn-light"
+                                        onclick="window.location.href='{{ url('/patient/appointments/new/step4') }}'"
+                                        style="font-size:1.5rem;line-height:1;">&times;</button>
+                                </div>
+                                <div class="modal-body p-4">
+
+                                    <form method="POST"
+                                        action="{{ route('patient.appointments.pay') }}">
+                                        @csrf
+                                        <div class="form-group mb-3">
+                                            <label for="cardName">Name on Card</label>
+                                            <input type="text" class="form-control"
+                                                id="cardName" name="cardName"
+                                                placeholder="Full Name" required>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="cardNumber">Card Number</label>
+                                            <input type="text" class="form-control"
+                                                id="cardNumber" name="cardNumber"
+                                                placeholder="XXXX XXXX XXXX XXXX" required maxlength="19"
+                                                oninput="formatCardNumber(this)">
+                                        <script>
+                                        function formatCardNumber(input) {
+                                            let value = input.value.replace(/\D/g, '');
+                                            let formatted = value.match(/.{1,4}/g);
+                                            input.value = formatted ? formatted.join(' ') : '';
+                                        }
+                                        </script>
+                                        </div>
+                                        <div class="form-row mb-3">
+                                            <div class="form-group col-md-6">
+                                                <label for="cardExpMonth">Expiry Month</label>
+                                                <input type="text" class="form-control"
+                                                    id="cardExpMonth" name="cardExpMonth"
+                                                    placeholder="MM" required maxlength="2" pattern="(0[1-9]|1[0-2])">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="cardExpYear">Expiry Year</label>
+                                                <input type="text" class="form-control"
+                                                    id="cardExpYear" name="cardExpYear"
+                                                    placeholder="YY" required maxlength="2" pattern="(2[5-9]|[3-9][0-9])">
+                                            </div>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="cardCVC">CVC</label>
+                                            <input type="text" class="form-control"
+                                                id="cardCVC" name="cardCVC" placeholder="CVC"
+                                                required maxlength="4">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100" onclick="console.log('=== FRONTEND LOG ==='); console.log('Stripe Token being sent: tok_visa'); console.log('Card Details: Name=' + document.getElementById('cardName').value + ', Number=****' + document.getElementById('cardNumber').value.slice(-4) + ', Exp=' + document.getElementById('cardExpMonth').value + '/' + document.getElementById('cardExpYear').value); console.log('Submitting form to backend...');">Pay
+                                            $100</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
