@@ -146,6 +146,7 @@ public function store(Request $request)
             ? $request->file('card_back_image')->store('insurances/back', 'public')
             : null;
 
+<<<<<<< HEAD
         // Handle member_name - if it's a number, it's a family member ID
         $familyMemberId = null;
         $memberName = $validated['member_name'];
@@ -168,6 +169,14 @@ public function store(Request $request)
             'insurance_type' => $validated['insurance_type'],
             'policy_number' => $validated['policy_number'],
             'member_name' => $memberName,
+=======
+        $insurance = \App\Models\Insurance::create([
+            'patient_id' => $patient->id,
+            // تمام fields include کریں
+            'insurance_type' => $validated['insurance_type'],
+            'policy_number' => $validated['policy_number'],
+            'member_name' => $validated['member_name'],
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
             'group_number' => $validated['group_number'],
             'insurance_provider' => $validated['insurance_provider'],
             'edi_payer' => $validated['edi_payer'],

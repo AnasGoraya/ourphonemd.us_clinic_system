@@ -124,7 +124,10 @@ Route::get('/signup/complete', function() {
 Route::get('/patient/signin', [PatientController::class, 'showSignIn'])->name('patient.signin');
 Route::post('/patient/signin', [PatientController::class, 'signIn'])->name('patient.signin.post');
 Route::post('/patient/logout', [PatientController::class, 'logout'])->name('patient.logout');
+<<<<<<< HEAD
 Route::get('/patient/appointments/{token}', [PatientController::class, 'appointmentDetails'])->name('patient.appointment.details');
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
 Route::get('/patient/appointments', [PatientController::class, 'appointmentDashboard'])->name('patient.appointments');
 
 // Appointment Wizard Routes

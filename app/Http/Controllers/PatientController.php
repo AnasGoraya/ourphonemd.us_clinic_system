@@ -2,9 +2,18 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\Doctor;
 use Stripe\Stripe;
 use Stripe\Charge;
+=======
+
+use App\Models\Doctor;
+
+use Stripe\Stripe;
+use Stripe\Charge;
+
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
 use App\Models\Patient;
 use App\Models\Appointment;
 use App\Models\User;
@@ -31,6 +40,7 @@ class PatientController extends Controller
 
     public function dashboard()
     {
+<<<<<<< HEAD
         try {
             Log::info('Dashboard accessed');
             $patient = Auth::guard('patient')->user();
@@ -41,6 +51,16 @@ class PatientController extends Controller
 
             // Get family members
             $familyMembers = FamilyMember::where('patient_id', $patient->id)->get();
+=======
+          try {
+        Log::info('Dashboard accessed');
+        $patient = Auth::guard('patient')->user();
+
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
 
             // Get appointment counts
             $upcomingAppointmentsCount = Appointment::where('patient_id', $patient->id)
@@ -56,6 +76,7 @@ class PatientController extends Controller
                 ->where('priority', 'urgent')
                 ->count();
 
+<<<<<<< HEAD
             // Get appointment data for calendars using the new method
             $pastAppointments = Appointment::with(['doctor', 'familyMember'])
                 ->where('patient_id', $patient->id)
@@ -144,6 +165,36 @@ class PatientController extends Controller
 
             // For now, set notes to 0 (can be implemented later)
             $familyMembersCount = $familyMembers->count();
+=======
+            // Get appointment data for calendars
+            $pastAppointments = Appointment::where('patient_id', $patient->id)
+                ->where('appointment_date', '<', now()->toDateString())
+                ->with('doctor')
+                ->orderBy('appointment_date', 'desc')
+                ->get();
+
+            $upcomingAppointments = Appointment::where('patient_id', $patient->id)
+                ->where('appointment_date', '>=', now()->toDateString())
+                ->whereIn('status', ['pending', 'confirmed'])
+                ->with('doctor')
+                ->orderBy('appointment_date', 'asc')
+                ->get();
+
+            $completedVisits = Appointment::where('patient_id', $patient->id)
+                ->whereIn('status', ['completed'])
+                ->with('doctor')
+                ->orderBy('appointment_date', 'desc')
+                ->get();
+
+            $walkinAppointments = Appointment::where('patient_id', $patient->id)
+                ->where('priority', 'urgent')
+                ->with('doctor')
+                ->orderBy('appointment_date', 'desc')
+                ->get();
+
+            // For now, set family members and notes to 0 (can be implemented later)
+            $familyMembersCount = 0;
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
             $notesCount = 0;
             $notes = [];
 
@@ -157,9 +208,13 @@ class PatientController extends Controller
                 'upcomingAppointments',
                 'completedVisits',
                 'walkinAppointments',
+<<<<<<< HEAD
                 'notes',
                 'patient',
                 'familyMembers'
+=======
+                'notes'
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
             ));
         } catch (\Exception $e) {
             Log::error('Dashboard error: ' . $e->getMessage());
@@ -167,6 +222,10 @@ class PatientController extends Controller
         }
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
     public function signUp(Request $request)
     {
         Log::info('=== PATIENT SIGNUP STARTED ===');
@@ -284,7 +343,10 @@ class PatientController extends Controller
             return back()->withErrors(['error' => 'Failed to create account. Please try again.'])->withInput();
         }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
     public function showSignIn()
     {
         return view('patient.signin');
@@ -518,6 +580,7 @@ public function showSignupForm()
         }
     }
 
+<<<<<<< HEAD
     // public function appointmentDashboard()
     // {
     //     $patient = Auth::guard('patient')->user();
@@ -647,6 +710,25 @@ public function appointmentDashboard()
 
     return view('patient.appointment-dashboard', compact('doctors', 'appointments'));
 }
+=======
+    public function appointmentDashboard()
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        $doctors = User::where('role_id', 5)->where('status', 'active')->get();
+        $appointments = Appointment::with(['doctor', 'payment'])
+            ->where('patient_id', $patient->id)
+            ->orderBy('appointment_date', 'desc')
+            ->orderBy('appointment_time', 'desc')
+            ->get();
+
+        return view('patient.appointment-dashboard', compact('doctors', 'appointments'));
+    }
+
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
 
     public function verifyEmail($token)
     {
@@ -818,7 +900,10 @@ public function appointmentDashboard()
                 'symptoms' => $request->symptoms,
                 'priority' => $request->priority,
                 'status' => 'pending',
+<<<<<<< HEAD
                 'token' => \Illuminate\Support\Str::random(24),
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
             ]);
 
             Log::info('Appointment created successfully: ' . $appointment->id);
@@ -999,6 +1084,7 @@ public function appointmentDashboard()
         return view('patient.notes');
     }
 
+<<<<<<< HEAD
         public function appointmentDetails($token)
         {
             $patient = Auth::guard('patient')->user();
@@ -1016,3 +1102,359 @@ public function appointmentDashboard()
 
 
 }
+=======
+    public function insurance()
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        return view('patient.insurance');
+    }
+
+    public function faqs()
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        return view('patient.faqs');
+    }
+
+    public function contactUs()
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        return view('patient.contact-us');
+    }
+
+    public function showForgotPasswordForm()
+    {
+        return view('patient.forgot-password');
+    }
+
+    public function familyMember()
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        return view('patient.family-member');
+    }
+
+    public function showAppointmentDetail($id)
+    {
+        $doctor = Auth::user();
+        if (!$doctor || $doctor->role_id != 5) {
+            return redirect('/')->withErrors(['error' => 'Unauthorized access.']);
+        }
+
+        try {
+            $appointment = Appointment::where('id', $id)
+                ->where('doctor_id', $doctor->id)
+                ->where('sent_to_doctor', true)
+                ->with('patient')
+                ->firstOrFail();
+
+            return view('doctor.appointment-detail', compact('appointment'));
+        } catch (\Exception $e) {
+            Log::error('Appointment detail error: ' . $e->getMessage());
+            return redirect('/doctor/dashboard')->withErrors(['error' => 'Appointment not found.']);
+        }
+    }
+    public function confirmAppointment($id)
+    {
+        $doctor = Auth::user();
+        if (!$doctor || $doctor->role_id != 5) {
+            return redirect('/')->withErrors(['error' => 'Unauthorized access.']);
+        }
+
+        try {
+            $appointment = Appointment::where('id', $id)
+                ->where('doctor_id', $doctor->id)
+                ->where('sent_to_doctor', true)
+                ->firstOrFail();
+
+            if ($appointment->status !== 'pending') {
+                return back()->withErrors(['error' => 'Only pending appointments can be confirmed.']);
+            }
+
+            $appointment->update(['status' => 'confirmed']);
+
+            return back()->with('success', 'Appointment confirmed successfully.');
+        } catch (\Exception $e) {
+            Log::error('Appointment confirmation error: ' . $e->getMessage());
+            return back()->withErrors(['error' => 'Failed to confirm appointment.']);
+        }
+    }
+
+    // Appointment Wizard Methods
+    public function wizardStep1()
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        // Clear any existing wizard session data
+        session()->forget(['appointment_wizard']);
+
+        return view('patient.appointments.wizard-step1');
+    }
+
+    public function processWizardStep1(Request $request)
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        $request->validate([
+            'is_adhd_appointment' => 'required|in:0,1'
+        ]);
+
+        // Store step 1 data in session
+        session(['appointment_wizard.step1' => [
+            'is_adhd_appointment' => $request->is_adhd_appointment
+        ]]);
+
+        return redirect()->route('patient.appointments.wizard.step2');
+    }
+
+    public function wizardStep2()
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        // Check if step 1 is completed
+        if (!session()->has('appointment_wizard.step1')) {
+            return redirect()->route('patient.appointments.wizard.step1');
+        }
+
+        $wizardData = session('appointment_wizard');
+        $doctors = User::where('role_id', 5)->where('status', 'active')->get();
+        $familyMembers = FamilyMember::where('patient_id', $patient->id)->get();
+
+        return view('patient.appointments.wizard-step2', compact('doctors', 'wizardData', 'familyMembers'));
+    }
+
+    public function processWizardStep2(Request $request)
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        // Check if step 1 is completed
+        if (!session()->has('appointment_wizard.step1')) {
+            return redirect()->route('patient.appointments.wizard.step1');
+        }
+
+        $request->validate([
+            'patient_selection' => 'required|regex:/^(self|family_\d+)$/'
+        ]);
+
+        // Store step 2 data in session
+        session(['appointment_wizard.step2' => [
+            'patient_selection' => $request->patient_selection
+        ]]);
+
+        return redirect()->route('patient.appointments.wizard.step3');
+    }
+
+    public function wizardStep3()
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        // Check if previous steps are completed
+        if (!session()->has('appointment_wizard.step1') || !session()->has('appointment_wizard.step2')) {
+            return redirect()->route('patient.appointments.wizard.step1');
+        }
+
+        $wizardData = session('appointment_wizard');
+        $doctors = User::where('role_id', 5)->where('status', 'active')->get();
+
+        // Determine selected member based on step 2 data
+        $selectedMember = null;
+        if (isset($wizardData['step2']['patient_selection'])) {
+            if ($wizardData['step2']['patient_selection'] === 'self') {
+                $selectedMember = [
+                    'type' => 'self',
+                    'first_name' => $patient->first_name,
+                    'last_name' => $patient->last_name,
+                ];
+            } elseif (str_starts_with($wizardData['step2']['patient_selection'], 'family_')) {
+                $familyMemberId = str_replace('family_', '', $wizardData['step2']['patient_selection']);
+                $familyMember = FamilyMember::where('id', $familyMemberId)
+                    ->where('patient_id', $patient->id)
+                    ->first();
+
+                if ($familyMember) {
+                    $selectedMember = [
+                        'type' => 'family',
+                        'first_name' => $familyMember->first_name,
+                        'last_name' => $familyMember->last_name,
+                        'relationship' => $familyMember->relationship,
+                    ];
+                }
+            }
+        }
+
+        return view('patient.appointments.wizard-step3', compact('wizardData', 'doctors', 'selectedMember'));
+    }
+
+    public function processWizardStep3(Request $request)
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        // Check if all steps are completed
+        if (!session()->has('appointment_wizard.step1') || !session()->has('appointment_wizard.step2')) {
+            return redirect()->route('patient.appointments.wizard.step1');
+        }
+
+        $request->validate([
+            'doctor_id' => 'required|exists:users,id',
+            'appointment_date' => 'required|date|after:today',
+            'appointment_time' => 'required',
+            'appointment_mode' => 'required|in:in-person,telemedicine',
+            'symptoms' => 'required|string|max:1000'
+        ]);
+
+        // Get doctor name for display
+        $doctor = User::find($request->doctor_id);
+
+        // Store step 3 data in session
+        session(['appointment_wizard.step3' => [
+            'doctor_id' => $request->doctor_id,
+            'doctor_name' => $doctor->name,
+            'appointment_date' => $request->appointment_date,
+            'appointment_time' => $request->appointment_time,
+            'appointment_mode' => $request->appointment_mode,
+            'symptoms' => $request->symptoms
+        ]]);
+
+        return redirect()->route('patient.appointments.wizard.step4');
+    }
+
+    public function wizardStep4()
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        // Check if all steps are completed
+        if (!session()->has('appointment_wizard.step1') || !session()->has('appointment_wizard.step2') || !session()->has('appointment_wizard.step3')) {
+            return redirect()->route('patient.appointments.wizard.step1');
+        }
+
+        $wizardData = session('appointment_wizard');
+
+        return view('patient.appointments.wizard-step4', compact('wizardData'));
+    }
+
+    public function processWizardStep4(Request $request)
+    {
+        $patient = Auth::guard('patient')->user();
+        if (!$patient) {
+            return redirect()->route('patient.signin');
+        }
+
+        // Check if all steps are completed
+        if (!session()->has('appointment_wizard.step1') || !session()->has('appointment_wizard.step2') || !session()->has('appointment_wizard.step3')) {
+            return redirect()->route('patient.appointments.wizard.step1');
+        }
+
+        $wizardData = session('appointment_wizard');
+
+        try {
+            // Check if doctor already has an appointment at same time
+            $existingAppointment = Appointment::where('doctor_id', $wizardData['step3']['doctor_id'])
+                ->where('appointment_date', $wizardData['step3']['appointment_date'])
+                ->where('appointment_time', $wizardData['step3']['appointment_time'])
+                ->whereNotIn('status', ['cancelled'])
+                ->first();
+
+            if ($existingAppointment) {
+                return back()->withErrors(['error' => 'This time slot is already booked for the selected doctor. Please choose a different time.']);
+            }
+
+            // Create the appointment
+            $appointment = Appointment::create([
+                'patient_id' => $patient->id,
+                'doctor_id' => $wizardData['step3']['doctor_id'],
+                'appointment_date' => $wizardData['step3']['appointment_date'],
+                'appointment_time' => $wizardData['step3']['appointment_time'],
+                'symptoms' => $wizardData['step3']['symptoms'],
+                'priority' => $wizardData['step1']['is_adhd_appointment'] ? 'urgent' : 'normal',
+                'status' => 'pending',
+                'appointment_mode' => $wizardData['step3']['appointment_mode'],
+                'wizard_step1_data' => json_encode($wizardData['step1']),
+                'wizard_step2_data' => json_encode($wizardData['step2']),
+                'wizard_step3_data' => json_encode($wizardData['step3'])
+            ]);
+
+            // Clear the wizard session
+            session()->forget('appointment_wizard');
+
+            return redirect()->route('patient.appointment.dashboard')
+                ->with('success', 'Appointment booked successfully! You will receive a confirmation notification.');
+
+        } catch (\Exception $e) {
+            Log::error('Wizard step 4 processing error: ' . $e->getMessage());
+            return back()->withErrors(['error' => 'Failed to book appointment. Please try again.']);
+        }
+    }
+    public function processPayment(Request $request)
+{
+    try {
+        // Stripe secret key set کریں
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        // Request سے data لیں
+        $token = $request->token;
+        $amount = $request->amount; // cents میں ہوتا ہے، e.g. 10000 = $100
+        $currency = $request->currency ?? 'usd';
+        $description = $request->description ?? 'Appointment Payment';
+
+        // Stripe charge create کریں
+        $charge = Charge::create([
+            'amount' => $amount,
+            'currency' => $currency,
+            'description' => $description,
+            'source' => $token,
+        ]);
+
+
+        if ($charge->status === 'succeeded') {
+            return response()->json(['success' => true, 'message' => 'Payment successful!']);
+        } else {
+            return response()->json(['success' => false, 'error' => 'Payment not completed.']);
+        }
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+}
+
+
+}
+
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7

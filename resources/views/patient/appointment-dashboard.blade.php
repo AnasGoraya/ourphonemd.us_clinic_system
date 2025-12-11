@@ -83,6 +83,7 @@
             </div>
         </div>
         <div class="mb-6">
+<<<<<<< HEAD
                 <div class="flex items-center justify-between mb-4">
                     <h2 style="font-size:2rem;font-weight:600;margin-bottom:0;">Upcoming Appointments</h2>
                     <a href="{{ route('patient.appointment.dashboard') }}" style="font-weight:500;font-size:1rem;text-decoration:none;color:#222;">
@@ -145,6 +146,120 @@
                     </div>
                     @endforelse
                 </div>
+=======
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-semibold">Upcoming Appointments</h2>
+                <a href="{{ route('patient.appointment.dashboard') }}">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs gap-1">
+                        View All
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right h-4 w-4">
+                            <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                    </button>
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @forelse($appointments as $appointment)
+                    <div class="rounded-xl border bg-white shadow-sm p-4">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-10 h-10 rounded-full bg-customTeal/10 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-customTeal">
+                                        <path d="M8 2v4"></path>
+                                        <path d="M16 2v4"></path>
+                                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                        <path d="M3 10h18"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Appointment #{{ $appointment->id }}</h4>
+                                    <p class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('M d, Y') }} at {{ date('h:i A', strtotime($appointment->appointment_time)) }}</p>
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 text-xs rounded-full font-medium
+                                @if($appointment->status == 'confirmed') bg-green-100 text-green-800
+                                @elseif($appointment->status == 'pending') bg-yellow-100 text-yellow-800
+                                @elseif($appointment->status == 'cancelled') bg-red-100 text-red-800
+                                @else bg-gray-100 text-gray-800 @endif">
+                                {{ ucfirst($appointment->status) }}
+                            </span>
+                        </div>
+                        <div class="space-y-2 mb-3">
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M22 2l-5 5"></path>
+                                    <path d="M21 2l-1 1"></path>
+                                </svg>
+                                <span class="text-sm text-gray-600">Dr. {{ $appointment->doctor->name ?? 'N/A' }}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+                                    <path d="M9 12h6"></path>
+                                    <path d="M9 16h6"></path>
+                                    <path d="M9 8h6"></path>
+                                    <path d="M3 4h18l-2 18H5L3 4Z"></path>
+                                </svg>
+                                <span class="text-sm text-gray-600">{{ $appointment->appointment_mode == 'telemedicine' ? 'Virtual Consultation' : 'In-Person Visit' }}</span>
+                            </div>
+                        </div>
+                        @if($appointment->symptoms)
+                            <div class="border-t pt-3">
+                                <p class="text-sm text-gray-600"><strong>Symptoms:</strong> {{ Str::limit($appointment->symptoms, 100) }}</p>
+                            </div>
+                        @endif
+                        <div class="border-t pt-3">
+                            <p class="text-sm text-gray-600"><strong>Payment Status:</strong>
+                                @if($appointment->payment && $appointment->payment->status === 'succeeded')
+                                    <span class="badge badge-success">Paid - ${{ $appointment->payment->amount }}</span>
+                                @elseif($appointment->payment && $appointment->payment->status === 'failed')
+                                    <span class="badge badge-danger">Payment Failed</span>
+                                @else
+                                    <span class="badge badge-warning">Payment Pending</span>
+                                @endif
+                            </p>
+                        </div>
+                        <div class="flex gap-2 mt-3">
+                            @if($appointment->status == 'pending')
+                                <form method="POST" action="{{ route('patient.cancel.appointment', $appointment->id) }}" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="px-3 py-1 text-xs bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors" onclick="return confirm('Are you sure you want to cancel this appointment?')">
+                                        Cancel
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                    </div>
+                @empty
+                    <div class="rounded-xl border bg-white shadow-sm p-6 py-8 text-center mt-4">
+                        <div class="d-flex flex-column align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar mb-3 text-gray-300">
+                                <path d="M8 2v4"></path>
+                                <path d="M16 2v4"></path>
+                                <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                <path d="M3 10h18"></path>
+                            </svg>
+                            <h3 class="h5 font-weight-bold mb-1 text-customTeal">No Upcoming Appointments</h3>
+                            <p class="text-muted mb-4">You don't have any scheduled appointments at the moment.</p>
+                            <a href="{{ route('patient.appointments.wizard.step1') }}">
+                                <button class="btn btn-customTeal btn-lg rounded-pill d-inline-flex align-items-center px-4 py-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-plus h-4 w-4 mr-2 text-white">
+                                        <path d="M8 2v4"></path>
+                                        <path d="M16 2v4"></path>
+                                        <path d="M21 13V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8"></path>
+                                        <path d="M3 10h18"></path>
+                                        <path d="M16 19h6"></path>
+                                        <path d="M19 16v6"></path>
+                                    </svg>
+                                    Schedule an Appointment
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                @endforelse
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
             </div>
         </div>
     </div>
@@ -526,6 +641,7 @@
         align-items: start;
     }
 
+<<<<<<< HEAD
     .appointment-item.self-appointment {
         border-left-color: #8b5cf6;
         background-color: #faf5ff;
@@ -536,6 +652,8 @@
         background-color: #f0f9fa;
     }
 
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
     .appointment-details {
         flex: 1;
     }
@@ -551,6 +669,7 @@
         display: block;
     }
 
+<<<<<<< HEAD
     .appointment-person-name {
         color: #1f2937;
         font-size: 1.05em;
@@ -589,6 +708,8 @@
         display: inline-block;
     }
 
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
     .appointment-status {
         padding: 4px 12px;
         border-radius: 12px;
@@ -743,6 +864,7 @@
         appointments.forEach(apt => {
             const time = apt.appointment_time ? new Date(`2000-01-01 ${apt.appointment_time}`).toLocaleString('default', { hour: '2-digit', minute: '2-digit', hour12: true }) : 'N/A';
             const statusClass = apt.status.toLowerCase();
+<<<<<<< HEAD
             let displayName = 'N/A';
             let appointmentFor = '';
             let appointmentTypeClass = '';
@@ -770,6 +892,17 @@
                         <span class="appointment-doctor">Dr. ${apt.doctor?.name || 'N/A'}</span>
                         <span class="appointment-time">${time}</span>
                         <span class="appointment-mode">${apt.appointment_mode === 'telemedicine' ? '👁️ Virtual Consultation' : '🏥 In-Person Visit'}</span>
+=======
+            let patientName = apt.patient_first_name ? `${apt.patient_first_name} ${apt.patient_last_name}` : 'N/A';
+            let relationship = apt.relationship ? ` (${apt.relationship})` : '';
+            html += `
+                <div class="appointment-item">
+                    <div class="appointment-details">
+                        <strong>Dr. ${apt.doctor?.name || 'N/A'}</strong><br>
+                        <strong>Patient:</strong> ${patientName}${relationship}<br>
+                        <small>${time}</small>
+                        <small>${apt.appointment_mode === 'telemedicine' ? '👁️ Virtual Consultation' : '🏥 In-Person Visit'}</small>
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                     </div>
                     <span class="appointment-status ${statusClass}">${apt.status.charAt(0).toUpperCase() + apt.status.slice(1)}</span>
                 </div>

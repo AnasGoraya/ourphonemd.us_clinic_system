@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 @extends('layouts.homepage')
+=======
+@extends('layouts.patient')
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
 
 @section('title', 'Forgot Password - Laravel Clinic')
 
 @section('content')
+<<<<<<< HEAD
     <style>   body {
     background-image: url('https://img.freepik.com/free-photo/young-handsome-physician-medical-robe-with-stethoscope_1303-17818.jpg?t=st=1746139347~exp=1746142947~hmac=c73e58a65605a23c92ca600973692cc8372440233a35d7e4552b6ae9d820da4c&w=1060');
     background-size: cover;
@@ -11,6 +16,9 @@
     background-repeat: no-repeat;
     /* No overlay - image full visible */
 }
+=======
+    <style>
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
         .form-control:focus {
             border-color: #318C7E;
             box-shadow: 0 0 0 0.2rem rgba(32, 125, 54, 0.25);

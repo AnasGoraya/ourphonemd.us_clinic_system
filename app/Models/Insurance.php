@@ -48,6 +48,7 @@ class Insurance extends Model
     }
 
     /**
+<<<<<<< HEAD
      * Get the family member that owns the insurance (nullable).
      */
     public function familyMember()
@@ -56,6 +57,8 @@ class Insurance extends Model
     }
 
     /**
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
      * Get front card image URL
      */
     public function getCardFrontImageUrlAttribute()

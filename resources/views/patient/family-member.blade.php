@@ -765,15 +765,24 @@
                          data-id="${member.id}"
                          data-name="${member.full_name.toLowerCase()}"
                          data-relationship="${member.relationship.toLowerCase()}">
+<<<<<<< HEAD
                         <div class="card shadow-sm ${member.has_insurance ? 'border-success' : ''}" style="border: none; border-radius: 10px; ${member.has_insurance ? 'border-left: 4px solid #28a745 !important;' : ''}">
+=======
+                        <div class="card shadow-sm" style="border: none; border-radius: 10px;">
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                             <div class="card-body p-4">
                                 <!-- Top Section: Name, Created Date, and Action Icons -->
                                 <div class="d-flex align-items-start justify-content-between mb-3">
                                     <div class="d-flex align-items-start gap-3">
                                         <!-- Profile Picture / Initials -->
+<<<<<<< HEAD
                                         <div style="width: 60px; height: 60px; background-color: ${member.has_insurance ? '#D4F4DD' : '#D4EEE8'}; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; ${member.has_insurance ? 'border: 2px solid #28a745;' : ''}">
                                             <span style="font-weight: 700; color: ${member.has_insurance ? '#28a745' : '#62B1A1'}; font-size: 18px;">${initials}</span>
                                             ${member.has_insurance ? '<i class="bi bi-shield-check position-absolute" style="top: -5px; right: -5px; background-color: #28a745; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 10px;"></i>' : ''}
+=======
+                                        <div style="width: 60px; height: 60px; background-color: #D4EEE8; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                            <span style="font-weight: 700; color: #62B1A1; font-size: 18px;">${initials}</span>
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                                         </div>
                                         <div>
                                             <h6 class="mb-1" style="color: #1F2937; font-weight: 700; font-size: 16px;">
@@ -786,7 +795,11 @@
                                     <div class="d-flex gap-2">
                                         <button type="button" class="btn btn-sm btn-light"
                                                 title="Edit"
+<<<<<<< HEAD
                                                 onclick="editFamilyMember(${member.id})"
+=======
+                                                onclick="openEditFamilyMemberModal(${member.id})"
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                                                 style="border: 1px solid #E5E7EB; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
                                             <i class="bi bi-pencil" style="color: #62B1A1;"></i>
                                         </button>
@@ -1401,10 +1414,13 @@ async function editFamilyMember(id) {
 
                 const member = result.data;
 
+<<<<<<< HEAD
                 // Reset form before populating
                 const editForm = document.getElementById('editFamilyMemberForm');
                 if (editForm) editForm.reset();
 
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                 // Populate form with member data
                 document.getElementById('editFamilyMemberId').value = id;
                 document.getElementById('edit_first_name').value = member.first_name || '';
@@ -1523,8 +1539,13 @@ async function editFamilyMember(id) {
 
                     // Close modal
                     const modalElement = document.getElementById('editFamilyMemberModal');
+<<<<<<< HEAD
                     const modal = new bootstrap.Modal(modalElement);
                     modal.hide();
+=======
+                    const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+                    if (modal) modal.hide();
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
 
                     // Reload family members
                     setTimeout(() => loadFamilyMembers(), 500);

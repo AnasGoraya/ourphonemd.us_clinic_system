@@ -601,11 +601,14 @@ const completedVisits = @json($completedVisits ?? []);
 const walkinAppointments = @json($walkinAppointments ?? []);
 const notes = @json($notes ?? []);
 
+<<<<<<< HEAD
 console.log('Past Appointments:', pastAppointments);
 console.log('First Upcoming:', upcomingAppointments[0]);
 console.log('Completed Visits:', completedVisits);
 console.log('Walk-in Appointments:', walkinAppointments);
 
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
 // Build maps of dates to appointments
 const pastAppointmentsByDate = {};
 const upcomingAppointmentsByDate = {};
@@ -625,6 +628,7 @@ upcomingAppointments.forEach(apt => {
     upcomingAppointmentsByDate[date].push(apt);
 });
 
+<<<<<<< HEAD
 completedVisits.forEach(apt => {
     const date = apt.appointment_date;
     if (!completedVisitsByDate[date]) completedVisitsByDate[date] = [];
@@ -637,6 +641,8 @@ walkinAppointments.forEach(apt => {
     walkinAppointmentsByDate[date].push(apt);
 });
 
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
 // Date variables for calendars
 let pastCurrentDate = new Date();
 let upcomingCurrentDate = new Date();
@@ -752,6 +758,7 @@ function createListItem(calendarType, item) {
         case 'upcoming':
             const time = item.appointment_time ? new Date(`2000-01-01 ${item.appointment_time}`).toLocaleString('default', { hour: '2-digit', minute: '2-digit', hour12: true }) : 'N/A';
             const statusClass = item.status.toLowerCase();
+<<<<<<< HEAD
 
             // Show who this appointment is for
             let patientName = item.member_name && item.relationship ? `${item.relationship.charAt(0).toUpperCase() + item.relationship.slice(1)}: ${item.member_name}` : (item.patient_name || 'Patient');
@@ -764,6 +771,12 @@ function createListItem(calendarType, item) {
                             ${patientName}
                         </div>
                         <strong>Dr. ${item.doctor_name || item.doctor?.name || 'N/A'}</strong>
+=======
+            return `
+                <div class="appointment-item">
+                    <div class="appointment-details">
+                        <strong>Dr. ${item.doctor?.name || 'N/A'}</strong>
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                         <small>${time}</small>
                         <small>${item.appointment_mode === 'telemedicine' ? '👁️ Virtual Consultation' : '🏥 In-Person Visit'}</small>
                     </div>
@@ -772,6 +785,7 @@ function createListItem(calendarType, item) {
             `;
 
         case 'completed':
+<<<<<<< HEAD
             // Show who this visit is for
             let completedPatientName = item.member_name && item.relationship ? `${item.relationship.charAt(0).toUpperCase() + item.relationship.slice(1)}: ${item.member_name}` : (item.patient_name || 'Patient');
             let completedNameColor = item.member_name && item.relationship ? '#51A897' : '#333';
@@ -782,6 +796,11 @@ function createListItem(calendarType, item) {
                         <div style="font-size: 16px; font-weight: 700; color: ${completedNameColor}; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid ${completedNameColor};">
                             ${completedPatientName}
                         </div>
+=======
+            return `
+                <div class="appointment-item">
+                    <div class="appointment-details">
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                         <strong>${item.doctor_name || 'Doctor'}</strong>
                         <small>Visit Date: ${item.visit_date || 'N/A'}</small>
                         <small>Diagnosis: ${item.diagnosis || 'Not specified'}</small>
@@ -792,6 +811,7 @@ function createListItem(calendarType, item) {
 
         case 'walkin':
             const walkinTime = item.appointment_time ? new Date(`2000-01-01 ${item.appointment_time}`).toLocaleString('default', { hour: '2-digit', minute: '2-digit', hour12: true }) : 'N/A';
+<<<<<<< HEAD
 
             // Show who this walk-in is for
             let walkinPatientName = item.member_name && item.relationship ? `${item.relationship.charAt(0).toUpperCase() + item.relationship.slice(1)}: ${item.member_name}` : (item.patient_name || 'Patient');
@@ -803,6 +823,11 @@ function createListItem(calendarType, item) {
                         <div style="font-size: 16px; font-weight: 700; color: ${walkinNameColor}; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid ${walkinNameColor};">
                             ${walkinPatientName}
                         </div>
+=======
+            return `
+                <div class="appointment-item">
+                    <div class="appointment-details">
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                         <strong>Walk-in Appointment</strong>
                         <small>${walkinTime}</small>
                         <small>${item.reason || 'No reason specified'}</small>

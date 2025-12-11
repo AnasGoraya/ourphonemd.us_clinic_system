@@ -41,8 +41,13 @@
                     <div class="h4 font-weight-bold text-customTeal mb-1">Book an Appointment</div>
                     <div class="text-muted mb-3" style="font-size: 0.98rem;">Complete the form below to schedule your
                         appointment</div>
+<<<<<<< HEAD
 
                         <div class="d-flex align-items-center justify-content-between mb-4" style="gap: 0.5rem;">
+=======
+                    <!-- Wizard Bar -->
+                    <div class="d-flex align-items-center justify-content-between mb-4" style="gap: 0.5rem;">
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                         <div class="wizard-step active">1</div>
                         <div class="wizard-bar"></div>
                         <div class="wizard-step active">2</div>
@@ -225,6 +230,7 @@
                                             </div>
                                         </div>
                                     </div>
+<<<<<<< HEAD
                                     <!-- Insurance Selection Section (shown when insurance payment is selected) -->
                                     <div id="insuranceSelection" class="hidden p-3 bg-blue-50 border border-blue-200 rounded-lg">
                                         <h6 class="font-medium text-blue-800 mb-3">Select Insurance Policy</h6>
@@ -248,6 +254,9 @@
 
                                     <!-- No Insurance Warning (shown when no insurance exists) -->
                                     <div id="noInsuranceWarning"
+=======
+                                    <div
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                                         class="flex items-center justify-between gap-2 p-2 bg-red-50 border border-red-200 rounded-lg">
                                         <div class="flex items-center gap-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -266,9 +275,15 @@
                                                 insurance</span>
                                         </div>
                                         <div>
+<<<<<<< HEAD
                                             <button
                                                 class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium h-8 rounded-md text-xs px-4 py-2 bg-customTeal text-white hover:bg-customTeal/90 hover:text-white"
                                                 type="button" onclick="window.location.href='{{ route('patient.insurance') }}'">
+=======
+                                            {{-- <button
+                                                class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium h-8 rounded-md text-xs px-4 py-2 bg-customTeal text-white hover:bg-customTeal/90 hover:text-white"
+                                                type="button">
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -278,7 +293,11 @@
                                                     </path>
                                                 </svg>
                                                 Add Insurance
+<<<<<<< HEAD
                                             </button>
+=======
+                                            </button> --}}
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                                         </div>
                                     </div>
                                 </div>

@@ -115,8 +115,12 @@
                                         class="text-danger">*</span></label>
                                 <select class="form-select" id="memberName" name="member_name" required>
                                     <option value="">Select who this insurance is for</option>
+<<<<<<< HEAD
                                     <option value="self">You ({{ Auth::guard('patient')->user()->first_name }} {{ Auth::guard('patient')->user()->last_name }})</option>
                                     <!-- Family members will be loaded here dynamically -->
+=======
+                                    <option value="self">You</option>
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                                 </select>
                                 <div class="invalid-feedback" id="member_nameError"></div>
                             </div>
@@ -372,10 +376,15 @@
             }
 
             loadInsurances();
+<<<<<<< HEAD
             loadFamilyMembers();
             setupFormHandler();
             setupFileUploads();
             setupMemberSelection();
+=======
+            setupFormHandler();
+            setupFileUploads();
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
         });
 
         function setupFileUploads() {
@@ -646,9 +655,12 @@
             const insuranceIdHidden = document.getElementById('insuranceIdHidden');
             if (insuranceIdHidden) insuranceIdHidden.value = '';
 
+<<<<<<< HEAD
             // Reload family members to ensure dropdown is up to date
             loadFamilyMembers();
 
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
             // Update modal title and button text - with null checks
             const modalTitle = document.getElementById('modalTitle');
             const submitBtnText = document.getElementById('submitBtnText');
@@ -813,6 +825,7 @@
             }
         }
 
+<<<<<<< HEAD
         async function loadFamilyMembers() {
             try {
                 const response = await fetch('/api/family-members');
@@ -865,6 +878,8 @@
             });
         }
 
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
         function showAlert(message, type) {
             const alertDiv = document.createElement('div');
             alertDiv.className = `alert alert-${type} alert-dismissible fade show`;

@@ -91,7 +91,10 @@
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
+<<<<<<< HEAD
                             <strong>Validation Error!</strong>
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                             <ul class="mb-0">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -100,6 +103,7 @@
                         </div>
                     @endif
 
+<<<<<<< HEAD
                     @if ($errors->has('patient_selection'))
                         <div class="alert alert-warning">
                             <strong>Warning:</strong> {{ $errors->first('patient_selection') }}
@@ -107,6 +111,9 @@
                     @endif
 
                     <form action="{{ route('patient.appointments.wizard.step2.post') }}" method="POST" id="step2-form">
+=======
+                    <form action="{{ route('patient.appointments.wizard.step2.post') }}" method="POST">
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
                         @csrf
                         <div class="row">
                             <div class="col-md-12">

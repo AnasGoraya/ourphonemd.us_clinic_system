@@ -95,7 +95,11 @@ public function pay(Request $request)
         }
 
         // Create the appointment
+<<<<<<< HEAD
         $appointmentData = [
+=======
+        $appointment = \App\Models\Appointment::create([
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
             'patient_id' => $patient->id,
             'doctor_id' => $wizardData['step3']['doctor_id'],
             'appointment_date' => $wizardData['step3']['appointment_date'],
@@ -103,6 +107,7 @@ public function pay(Request $request)
             'symptoms' => $wizardData['step3']['symptoms'],
             'priority' => $wizardData['step1']['is_adhd_appointment'] ? 'urgent' : 'normal',
             'status' => 'confirmed', // Set to confirmed after payment
+<<<<<<< HEAD
             'appointment_mode' => $wizardData['step3']['appointment_mode'] ?? 'in-person',
             'wizard_step2_data' => json_encode($wizardData['step2'] ?? []),
         ];
@@ -115,6 +120,10 @@ public function pay(Request $request)
 
         $appointmentData['token'] = \Illuminate\Support\Str::random(24);
         $appointment = \App\Models\Appointment::create($appointmentData);
+=======
+            'appointment_mode' => $wizardData['step3']['appointment_mode'] ?? 'in-person'
+        ]);
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
 
         // Update payment with appointment_id
         $payment->update(['appointment_id' => $appointment->id]);

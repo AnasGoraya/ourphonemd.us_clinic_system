@@ -11,7 +11,10 @@ class Appointment extends Model
 
     protected $fillable = [
         'patient_id',
+<<<<<<< HEAD
         'family_member_id',
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
         'doctor_id',
         'appointment_date',
         'appointment_time',
@@ -32,24 +35,33 @@ class Appointment extends Model
         'wizard_step1_data',
         'wizard_step2_data',
         'wizard_step3_data',
+<<<<<<< HEAD
         'token',
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
     ];
 
     protected $casts = [
         'images' => 'array',
     ];
 
+<<<<<<< HEAD
     // Relationships
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
     public function patient()
     {
         return $this->belongsTo(Patient::class);
     }
 
+<<<<<<< HEAD
     public function familyMember()
     {
         return $this->belongsTo(FamilyMember::class, 'family_member_id');
     }
 
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
     public function doctor()
     {
         return $this->belongsTo(User::class, 'doctor_id');
@@ -59,6 +71,7 @@ class Appointment extends Model
     {
         return $this->hasOne(Payment::class);
     }
+<<<<<<< HEAD
 
     // Accessor for patient name (for display purposes)
     public function getPatientDisplayNameAttribute()
@@ -169,4 +182,6 @@ class Appointment extends Model
 
         return null;
     }
+=======
+>>>>>>> e848bd541e60b1a9b72896dfcdd382d35d4d30c7
 }
